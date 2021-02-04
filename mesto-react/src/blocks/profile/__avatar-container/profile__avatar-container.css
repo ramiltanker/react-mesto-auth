@@ -1,0 +1,8 @@
+.profile__avatar-container {
+    cursor: pointer;
+    position: relative;
+}
+
+.profile__avatar-container:hover {
+    background: rgba(0, 0, 0, 0.8);
+}

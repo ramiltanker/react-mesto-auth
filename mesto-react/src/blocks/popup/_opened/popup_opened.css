@@ -1,0 +1,10 @@
+.popup_opened {
+  display: flex;
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+  transition-property: visibility, opacity, display;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+  transition-delay: 0.2s;
+}

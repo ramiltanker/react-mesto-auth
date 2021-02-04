@@ -1,0 +1,19 @@
+.popup__close-button-image {
+    right:  -30px;
+    top: -45px;
+    max-width: 40px;
+    max-height: 40px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: absolute; 
+}
+
+
+@media all and (max-width:425px) {
+    .popup__close-button-image {
+        width: 30px;
+        height: 30px;
+    }
+}

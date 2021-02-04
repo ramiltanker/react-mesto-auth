@@ -1,0 +1,10 @@
+.elements__image {
+    width: 282px;
+    height: 282px;
+    grid-row: 1/5;
+    grid-column: 1/2;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    object-fit: cover;
+}

@@ -1,0 +1,22 @@
+.popup__form-title {
+  max-width: 358px;
+  max-height: 14px;
+  border-width: 0 0 1px 0;
+  border-color: rgba(0, 0, 0, 0.2);
+  padding: 0;
+  margin-bottom: 30px;
+  margin-left: 36px;
+  padding-bottom: 13px;
+}
+
+@media all and (max-width: 590px) {
+  .popup__form-title {
+    max-width: 285px;
+  }
+}
+
+@media all and (max-width: 425px) {
+  .popup__form-title {
+    max-width: 180px;
+  }
+}

@@ -1,0 +1,20 @@
+.popup__container {
+    max-height: 100%;
+    width: 430px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    position: absolute;
+}
+
+@media all and (max-width: 590px) {
+    .popup__container {
+        width: 350px;
+    }
+}
+
+@media all and (max-width: 425px) {
+    .popup__container {
+        width: 250px;
+    }
+}

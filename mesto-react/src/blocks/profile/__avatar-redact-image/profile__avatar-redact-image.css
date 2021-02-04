@@ -1,0 +1,8 @@
+.profile__avatar-redact-image {
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 40%;
+    left: 33%;
+    visibility: hidden;
+}

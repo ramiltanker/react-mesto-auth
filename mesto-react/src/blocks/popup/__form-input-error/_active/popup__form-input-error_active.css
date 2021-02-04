@@ -1,0 +1,8 @@
+.popup__form-input-error_active {
+  visibility: visible;
+  margin-bottom: 31px;
+}
+
+.popup__form-field:first-child .popup__form-input-error {
+  margin-bottom: 13px;
+}
