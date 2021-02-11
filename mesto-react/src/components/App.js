@@ -38,7 +38,8 @@ const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   // Хранение email пользоателя
-  // const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState('');
+
 React.useEffect(() => {
    api.getUserInfo()
  .then((data) => {
@@ -146,6 +147,13 @@ function handleLogin() {
   setLoggedIn(true);
 }
 
+function handleLogout() {
+  setLoggedIn(false);
+  setEmail(email);
+  localStorage.removeItem('jwt'); 
+  history.push('/sign-in');
+}
+
 function handleRegister() {
   auth.register()
   .then((res) => {
@@ -170,10 +178,11 @@ const jwt = localStorage.getItem('jwt');
     .then((res) => {
       if (res) {
         setLoggedIn(true);
+        setEmail(res.data.email);
+        console.log(res);
         console.log(loggedIn);
         history.push('/');
       }
-      console.log(res);
     })
     .catch((error) => {
       console.log(error);
@@ -183,13 +192,12 @@ const jwt = localStorage.getItem('jwt');
 
 React.useEffect(() => {
   handleTokenCheck();
-});
+}, []);
 
   return (
-    <BrowserRouter>
 <CurrentUserContext.Provider value={currentUser}>
 
-<Header />
+<Header email={email} loggedOut={handleLogout} loggedIn={loggedIn} />
 
 <Switch>
 <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Main} 
@@ -197,7 +205,7 @@ onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAv
 onCardClick={handleCardClick} likeCard={handleCardLike} deleteCard={handleCardDelete} cards={cards} />
 
 <Route path="/sign-in">
-  <Login handleLogin={handleLogin} />
+  <Login handleLogin={handleLogin} setEmail={setEmail} />
 </Route> 
 
 <Route path="/sign-up">
@@ -225,7 +233,6 @@ onCardClick={handleCardClick} likeCard={handleCardLike} deleteCard={handleCardDe
 <ImagePopup name="image" card={selectedCard} onClose={closeAllPopups} />
 
 </CurrentUserContext.Provider> 
-</BrowserRouter>
   );
 }
 

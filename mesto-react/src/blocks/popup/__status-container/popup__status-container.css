@@ -10,3 +10,10 @@
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
+
+@media all and (max-width: 325px) {
+  .popup__status-container {
+    width: 280px;
+    height: 308px;
+  }
+}

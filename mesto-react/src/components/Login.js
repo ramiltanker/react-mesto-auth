@@ -20,8 +20,7 @@ function Login(props) {
     auth.authorization(email, password)
     .then(data => {
       if (data.token) {
-        setPassword('');
-        setEmail('');
+        props.setEmail(email);
         props.handleLogin();
         history.push('/');
       }

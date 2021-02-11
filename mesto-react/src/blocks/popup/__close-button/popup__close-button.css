@@ -1,23 +1,23 @@
 .popup__close-button {
-    max-width: 40px;
-    max-height: 40px;
-    background: none;
-    border: none;
-    padding: 0;
-    position: absolute;
-    left: 420px;
-    top: -45px;
-    cursor: pointer;
+  max-width: 40px;
+  max-height: 40px;
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  left: 420px;
+  top: -45px;
+  cursor: pointer;
 }
 
 @media all and (max-width: 590px) {
-    .popup__close-button {
-        left: 340px;
-    }
+  .popup__close-button {
+    left: 340px;
+  }
 }
 
 @media all and (max-width: 425px) {
-    .popup__close-button {
-        left: 240px;
-    }
+  .popup__close-button {
+    left: 240px;
+  }
 }

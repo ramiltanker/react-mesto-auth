@@ -8,6 +8,9 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__box/header__box.css);
+@import url(./blocks/header/__button-logout/header__button-logout.css);
 /* Header */
 /* Profile */
 @import url(./blocks/profile/profile.css);
@@ -69,6 +72,7 @@
 @import url(./blocks/popup/__status-image/popup__status-image.css);
 @import url(./blocks/popup/__status-container/popup__status-container.css);
 @import url(./blocks/popup/__status-title/popup__status-title.css);
+@import url(./blocks/popup/__tooltip-close-button/popup__tooltip-close-button.css);
 /* Popup */
 @import url(./blocks/elements/__like-button/_active/elements__like-button_active.css);
 
