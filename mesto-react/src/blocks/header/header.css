@@ -2,7 +2,7 @@
     max-width: 882px;
     min-height: 74px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     margin: auto;
     padding-top: 45px;

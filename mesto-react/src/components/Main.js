@@ -1,11 +1,8 @@
 import React from 'react';
 
-
 import avatarRedact from '../images/avatar-redact.svg';
 import editButtom from '../images/edit_button.svg';
 import addButton from '../images/add-button.svg';
-
-import api from '../utils/api.js';
 
 import Card from './Card.js';
 

@@ -136,8 +136,6 @@ export class Api {
       // другие методы работы с API
 }
 
-
-
 const api = new Api({
   address: 'https://mesto.nomoreparties.co/v1',
   token: '0ab7ee2c-4048-41b7-8933-e3538494cc1c',
