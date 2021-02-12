@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {BrowserRouter, Route, Switch, useHistory, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect, withRouter } from 'react-router-dom';
 
 import Header from './Header.js';
 import Main from './Main.js';
@@ -29,9 +29,6 @@ const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false
 const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
-const [status, setStatus] = React.useState(false);
-const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-
 const [currentUser, setCurrentUser] = React.useState({});
 const [cards, setCards] = React.useState([]);
   // статус пользователя — вошёл он в систему или нет
@@ -40,16 +37,25 @@ const [cards, setCards] = React.useState([]);
   // Хранение email пользоателя
   const [email, setEmail] = React.useState('');
 
+  const [status, setStatus] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+
 React.useEffect(() => {
    api.getUserInfo()
  .then((data) => {
    setCurrentUser(data);
  })
+ .catch((error) => {
+  console.log(error);
+})
 
  api.getInitialCards()
  .then((data) => {
   setCards(data);
  })
+ .catch((error) => {
+  console.log(error);
+})
 },[])
 
 
@@ -116,6 +122,7 @@ function handleUpdateUser(data) {
 api.setProfileInfo(data.name, data.about)
 .then((newData) => {
 setCurrentUser(newData);
+closeAllPopups();
 })
 .catch((error) => {
   console.log(error);
@@ -126,6 +133,7 @@ function handleUpdateAvatar(data) {
   api.setAvatar(data.avatar)
   .then((newAvatar) => {
     setCurrentUser(newAvatar);
+    closeAllPopups();
   })
   .catch((error) => {
     console.log(error);
@@ -137,14 +145,35 @@ function handleAddPlaceSubmit(data) {
   api.addNewCards(data)
   .then((newCard) => {
     setCards([newCard, ...cards]);
+    closeAllPopups();
   })
   .catch((error) => {
     console.log(error);
   })
 }
 
-function handleLogin() {
+function handleLogin(email, password) {
   setLoggedIn(true);
+  auth.authorization(email, password)
+  .then((res) => {
+    if (res.token){
+        localStorage.setItem('jwt', res.token);
+        return res;
+    } else {
+        return;
+    }
+}) 
+  .then(data => {
+    if (data.token) {
+      setEmail(email);
+      history.push('/');
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    setIsInfoTooltipOpen(true);
+    setStatus(false);
+  });
 }
 
 function handleLogout() {
@@ -154,8 +183,8 @@ function handleLogout() {
   history.push('/sign-in');
 }
 
-function handleRegister() {
-  auth.register()
+function handleRegister(email, password) {
+  auth.register(email, password)
   .then((res) => {
     if (res) {
   setIsInfoTooltipOpen(true);
@@ -179,8 +208,6 @@ const jwt = localStorage.getItem('jwt');
       if (res) {
         setLoggedIn(true);
         setEmail(res.data.email);
-        console.log(res);
-        console.log(loggedIn);
         history.push('/');
       }
     })
@@ -226,7 +253,7 @@ onCardClick={handleCardClick} likeCard={handleCardLike} deleteCard={handleCardDe
 
  <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} name={'card'} />
  
- <InfoTooltip status={status} isOpen={isInfoTooltipOpen} onClose={closeAllPopups} />  
+ <InfoTooltip status={status} isOpen={isInfoTooltipOpen} onClose={closeAllPopups} /> 
 
 <PopupWithForm name="delete" title="Вы уверены?" onClose={closeAllPopups} buttonName="Да" />
 

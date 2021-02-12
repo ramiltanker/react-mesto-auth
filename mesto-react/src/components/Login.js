@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import * as auth from '../utils/auth.js';
 
 import InfoTooltip from './InfoTooltip.js';
@@ -8,36 +8,12 @@ function Login(props) {
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
 
-  const [status, setStatus] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const history = useHistory();
-
   function handleSubmit(event) {
     event.preventDefault();
     if (!email || !password) {
       return;
     }
-    auth.authorization(email, password)
-    .then(data => {
-      if (data.token) {
-        props.setEmail(email);
-        props.handleLogin();
-        history.push('/');
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      setOpen(true);
-      handleInfoTooltipOpen(false);
-    });
-  }
-
-  function handleInfoTooltipOpen(status) {
-    setStatus(status);
-  }
-
-  function handleInfoTooltipClose() {
-    setOpen(false);
+    props.handleLogin(email, password);
   }
 
      return (
@@ -52,7 +28,6 @@ function Login(props) {
            <button type="submit" className="login__button" onSubmit={handleSubmit} >Войти</button>
            </form>
          </div>
-         <InfoTooltip status={status} isOpen={open} onClose={handleInfoTooltipClose} />
          </>
      )
 }
