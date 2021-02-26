@@ -137,7 +137,7 @@ export class Api {
 }
 
 const api = new Api({
-  address: 'https://mesto.nomoreparties.co/v1',
+  address: 'https://api.domainname.students.nomoreparties.space',
   token: '0ab7ee2c-4048-41b7-8933-e3538494cc1c',
   cohort: 'cohort-17',
 })

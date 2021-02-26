@@ -1,7 +1,7 @@
-export const  BASE_URL  = 'https://auth.nomoreparties.co';
+export const  BASE_URL  = 'https://api.domainname.students.nomoreparties.space';
 
 export const register = (email, password) => {
-    return fetch(`${BASE_URL}/signup`, {
+    return fetch(`${BASE_URL}/sign-up`, {
         method: 'POST',
         headers: {
         'Accept': 'application/json',
@@ -24,7 +24,7 @@ export const register = (email, password) => {
 }
 
 export const authorization = (email, password) => {
-    return fetch(`${BASE_URL}/signin`, {
+    return fetch(`${BASE_URL}/sign-in`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
