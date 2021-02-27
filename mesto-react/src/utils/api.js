@@ -1,7 +1,5 @@
 export class Api {
-  constructor({ address, token, cohort}) {
-    this._token = token;
-    this._cohort = cohort;
+  constructor({ address}) {
     this._address = address;
   }
     
@@ -15,10 +13,10 @@ export class Api {
 
 
 
-      getInitialCards() {
-          return fetch(`${this._address}/${this._cohort}/cards`, {
+      getInitialCards(token) {
+          return fetch(`${this._address}/cards`, {
             headers: {
-              authorization: this._token
+              authorization: `Bearer ${token}`,
             }
           })
         .then(res => 
@@ -27,11 +25,11 @@ export class Api {
       }
     
     
-      addNewCards(data) {
-          return fetch(`${this._address}/${this._cohort}/cards`, {
+      addNewCards(data, token) {
+          return fetch(`${this._address}/cards`, {
               method: 'POST',
               headers: {
-                authorization: this._token,
+                authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
@@ -47,10 +45,10 @@ export class Api {
 
 
 
-      getUserInfo() {
-        return fetch(`${this._address}/${this._cohort}/users/me`, {
+      getUserInfo(token) {
+        return fetch(`${this._address}/users/me`, {
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
         })
@@ -59,11 +57,11 @@ export class Api {
       )
       }
 
-      setProfileInfo(name, about) {
-        return fetch(`${this._address}/${this._cohort}/users/me`, {
+      setProfileInfo(name, about, token) {
+        return fetch(`${this._address}/users/me`, {
           method: 'PATCH',
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -78,11 +76,11 @@ export class Api {
       }
 
 
-      setAvatar(avatar) {
-        return fetch(`${this._address}/${this._cohort}/users/me/avatar`, {
+      setAvatar(avatar, token) {
+        return fetch(`${this._address}/users/me/avatar`, {
           method: 'PATCH',
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -95,11 +93,11 @@ export class Api {
       }
 
       
-      likeCard(cardId) {
-        return fetch(`${this._address}/${this._cohort}/cards/likes/${cardId}`, {
+      likeCard(cardId, token) {
+        return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'PUT',
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -108,11 +106,11 @@ export class Api {
       )
       }
 
-      deleteCardLike(cardId) {
-        return fetch(`${this._address}/${this._cohort}/cards/likes/${cardId}`, {
+      deleteCardLike(cardId, token) {
+        return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'DELETE',
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -121,11 +119,11 @@ export class Api {
       )
       }
 
-      deleteCard(cardId) {
-        return fetch(`${this._address}/${this._cohort}/cards/${cardId}`, {
+      deleteCard(cardId, token) {
+        return fetch(`${this._address}/cards/${cardId}`, {
           method: 'DELETE',
           headers: {
-            authorization: this._token,
+            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -137,9 +135,7 @@ export class Api {
 }
 
 const api = new Api({
-  address: 'https://api.domainname.students.nomoreparties.space',
-  token: '0ab7ee2c-4048-41b7-8933-e3538494cc1c',
-  cohort: 'cohort-17',
+  address: 'http://api.domainname.students.nomoreparties.space',
 })
 
 export default api;

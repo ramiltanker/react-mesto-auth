@@ -34,6 +34,8 @@ const [cards, setCards] = React.useState([]);
   // статус пользователя — вошёл он в систему или нет
   const [loggedIn, setLoggedIn] = React.useState(false);
 
+  const [token, setToken] = React.useState('');
+
   // Хранение email пользоателя
   const [email, setEmail] = React.useState('');
 
@@ -41,7 +43,7 @@ const [cards, setCards] = React.useState([]);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
 
 React.useEffect(() => {
-   api.getUserInfo()
+   api.getUserInfo(token)
  .then((data) => {
    setCurrentUser(data);
  })
@@ -49,7 +51,7 @@ React.useEffect(() => {
   console.log(error);
 })
 
- api.getInitialCards()
+ api.getInitialCards(token)
  .then((data) => {
   setCards(data);
  })
@@ -202,6 +204,7 @@ function handleRegister(email, password) {
 
 function handleTokenCheck() {
 const jwt = localStorage.getItem('jwt'); 
+setToken(jwt);
   if (jwt) { 
     auth.checkToken(jwt)
     .then((res) => {
