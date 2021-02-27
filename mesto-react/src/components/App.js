@@ -160,6 +160,7 @@ function handleLogin(email, password) {
   .then((res) => {
     if (res.token){
         localStorage.setItem('jwt', res.token);
+        setToken(res.token);
         return res;
     } else {
         return;
@@ -206,6 +207,7 @@ function handleTokenCheck() {
 const jwt = localStorage.getItem('jwt'); 
 setToken(jwt);
   if (jwt) { 
+    setToken(jwt)
     auth.checkToken(jwt)
     .then((res) => {
       if (res) {

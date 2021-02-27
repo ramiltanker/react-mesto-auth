@@ -1,5 +1,5 @@
 export class Api {
-  constructor({ address}) {
+  constructor({ address }) {
     this._address = address;
   }
     
@@ -16,7 +16,9 @@ export class Api {
       getInitialCards(token) {
           return fetch(`${this._address}/cards`, {
             headers: {
-              authorization: `Bearer ${token}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
             }
           })
         .then(res => 
@@ -29,8 +31,9 @@ export class Api {
           return fetch(`${this._address}/cards`, {
               method: 'POST',
               headers: {
-                authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
               },
               body: JSON.stringify({
                 name: data.name,
@@ -48,8 +51,9 @@ export class Api {
       getUserInfo(token) {
         return fetch(`${this._address}/users/me`, {
           headers: {
-            authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
         })
         .then(res => 
@@ -61,8 +65,9 @@ export class Api {
         return fetch(`${this._address}/users/me`, {
           method: 'PATCH',
           headers: {
-            authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify({
             name: name, 
@@ -80,7 +85,7 @@ export class Api {
         return fetch(`${this._address}/users/me/avatar`, {
           method: 'PATCH',
           headers: {
-            authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -97,7 +102,7 @@ export class Api {
         return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'PUT',
           headers: {
-            authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -110,7 +115,7 @@ export class Api {
         return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'DELETE',
           headers: {
-            authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -123,8 +128,9 @@ export class Api {
         return fetch(`${this._address}/cards/${cardId}`, {
           method: 'DELETE',
           headers: {
-            authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           }
         })
         .then(res => 
@@ -135,7 +141,8 @@ export class Api {
 }
 
 const api = new Api({
-  address: 'http://api.domainname.students.nomoreparties.space',
+  // address: 'https://api.domainname.students.nomoreparties.space',
+  address: 'http://localhost:3001',
 })
 
 export default api;

@@ -1,8 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import * as auth from '../utils/auth.js';
-
-import InfoTooltip from './InfoTooltip.js';
 
 function Login(props) {
   const [password, setPassword] = React.useState('');
