@@ -49,7 +49,7 @@ function Main(props) {
   <section className="elements">
     {props.cards.map( data => (
       <Card key={data._id} card={data} onCardClick={props.onCardClick} onLikeClick={props.likeCard} 
-      onDeleteClick={props.deleteCard} />
+      onDeleteCardLike={props.deleteLikeCard} onDeleteClick={props.deleteCard} />
     )
     )}
   </section>

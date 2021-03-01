@@ -98,7 +98,7 @@ export class Api {
       }
 
       
-      likeCard(cardId, token) {
+      likeCard(cardId, status, token) {
         return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'PUT',
           headers: {
@@ -111,7 +111,7 @@ export class Api {
       )
       }
 
-      deleteCardLike(cardId, token) {
+      deleteCardLike(cardId, status, token) {
         return fetch(`${this._address}/cards/likes/${cardId}`, {
           method: 'DELETE',
           headers: {
@@ -141,8 +141,7 @@ export class Api {
 }
 
 const api = new Api({
-  // address: 'https://api.domainname.students.nomoreparties.space',
-  address: 'http://localhost:3001',
+  address: 'https://api.domainname.students.nomoreparties.space',
 })
 
 export default api;

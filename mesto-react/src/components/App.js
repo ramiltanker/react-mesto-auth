@@ -43,23 +43,18 @@ const [cards, setCards] = React.useState([]);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
 
 React.useEffect(() => {
-   api.getUserInfo(token)
- .then((data) => {
-   setCurrentUser(data);
- })
- .catch((error) => {
-  console.log(error);
-})
-
- api.getInitialCards(token)
- .then((data) => {
-  setCards(data);
- })
- .catch((error) => {
-  console.log(error);
-})
-},[])
-
+  Promise.all([
+    api.getUserInfo(token),
+    api.getInitialCards(token)
+  ])
+    .then(([user, initialCards]) => {
+      setCurrentUser(user);
+      setCards(initialCards.reverse());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, [token]);
 
 
 
@@ -93,10 +88,25 @@ function handleCardClick(openedCard) {
 
 function handleCardLike(card) {
   // Снова проверяем, есть ли уже лайк на этой карточке
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
-  
+  const isLiked = card.likes.some(i => i === currentUser._id);
   // Отправляем запрос в API и получаем обновлённые данные карточки
-  api.likeCard(card._id, !isLiked)
+  api.likeCard(card._id, !isLiked, token)
+  .then((newCard) => {
+      // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+    const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+    // Обновляем стейт
+    setCards(newCards);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+} 
+
+function handleDeleteCardLike(card) {
+  // Снова проверяем, есть ли уже лайк на этой карточке
+  const isLiked = card.likes.some(i => i === currentUser._id);
+  // Отправляем запрос в API и получаем обновлённые данные карточки
+  api.deleteCardLike(card._id, !isLiked, token)
   .then((newCard) => {
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
     const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -109,10 +119,12 @@ function handleCardLike(card) {
 } 
 
 function handleCardDelete(card) {
-  api.deleteCard(card._id)
+  console.log(token);
+  api.deleteCard(card._id, token)
   .then(() => {
     const newCards = cards.filter((c) => c._id !== card._id);
     setCards(newCards);
+    closeAllPopups();
   })
   .catch((error) => {
     console.log(error);
@@ -121,8 +133,9 @@ function handleCardDelete(card) {
 
 
 function handleUpdateUser(data) {
-api.setProfileInfo(data.name, data.about)
+api.setProfileInfo(data.name, data.about, token)
 .then((newData) => {
+  console.log(newData);
 setCurrentUser(newData);
 closeAllPopups();
 })
@@ -132,7 +145,7 @@ closeAllPopups();
 }
 
 function handleUpdateAvatar(data) {
-  api.setAvatar(data.avatar)
+  api.setAvatar(data.avatar, token)
   .then((newAvatar) => {
     setCurrentUser(newAvatar);
     closeAllPopups();
@@ -144,8 +157,10 @@ function handleUpdateAvatar(data) {
 
 
 function handleAddPlaceSubmit(data) {
-  api.addNewCards(data)
+  console.log(data);
+  api.addNewCards(data, token)
   .then((newCard) => {
+    console.log(newCard)
     setCards([newCard, ...cards]);
     closeAllPopups();
   })
@@ -205,6 +220,7 @@ function handleRegister(email, password) {
 
 function handleTokenCheck() {
 const jwt = localStorage.getItem('jwt'); 
+console.log(jwt);
 setToken(jwt);
   if (jwt) { 
     setToken(jwt)
@@ -212,7 +228,7 @@ setToken(jwt);
     .then((res) => {
       if (res) {
         setLoggedIn(true);
-        setEmail(res.data.email);
+        setEmail(res.email);
         history.push('/');
       }
     })
@@ -234,7 +250,7 @@ React.useEffect(() => {
 <Switch>
 <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Main} 
 onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} 
-onCardClick={handleCardClick} likeCard={handleCardLike} deleteCard={handleCardDelete} cards={cards} />
+onCardClick={handleCardClick} likeCard={handleCardLike} deleteLikeCard={handleDeleteCardLike} deleteCard={handleCardDelete} cards={cards} />
 
 <Route path="/sign-in">
   <Login handleLogin={handleLogin} setEmail={setEmail} />
